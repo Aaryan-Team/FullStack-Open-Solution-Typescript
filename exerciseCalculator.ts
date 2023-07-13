@@ -1,4 +1,4 @@
-interface MultiplyValues {
+export interface MultiplyValues {
   periodLength: number;
   trainingDays: number;
   success: boolean;
@@ -8,7 +8,7 @@ interface MultiplyValues {
   average: number;
 }
 
-interface ExerciseValues {
+/*interface ExerciseValues {
   array: Array<number>;
   target: number;
 }
@@ -32,13 +32,12 @@ const parseArgumentS = (args: string[]): ExerciseValues => {
   } else {
     throw new Error("Provided values were not numbers!");
   }
-};
+};*/
 
-const calculateExercises = (arr: Array<number>, target: number) => {
+export const calculateExercises = (arr: Array<number>, target: number) : MultiplyValues => {
   const periodLength: number = arr.length;
 
   let success: boolean = false,
-    rating: number,
     ratingDescription: string;
 
   let trainingDays: Array<number> = [];
@@ -52,7 +51,7 @@ const calculateExercises = (arr: Array<number>, target: number) => {
     trainingDays.reduce((acc, curr) => (acc = acc + curr), 0) / periodLength;
 
   if (average < target) {
-    rating = 1;
+    
     ratingDescription = "not too bad but could be better";
   } else {
     success = true;
@@ -70,7 +69,7 @@ const calculateExercises = (arr: Array<number>, target: number) => {
   };
 };
 
-try {
+/*try {
   const { array, target } = parseArgumentS(process.argv);
   console.log(calculateExercises(array, target));
 } catch (error: unknown) {
@@ -83,4 +82,4 @@ try {
   // here we can not use error.message
 
   console.log(errorMessage);
-}
+}*/
