@@ -8,13 +8,39 @@ interface MultiplyValues {
   average: number;
 }
 
+interface ExerciseValues {
+  array: Array<number>;
+  target: number;
+}
+
+const parseArgumentS = (args: string[]): ExerciseValues => {
+  if (args.length < 1) throw new Error("Not enough arguments");
+
+  //console.log(args);
+
+  if (!isNaN(Number(args[2]))) {
+    let newArr: Array<number> = [];
+    for (let i = 3; i < args.length; i++) {
+      newArr.push(Number(args[i]));
+    }
+    //console.log("newArr", newArr);
+
+    return {
+      array: newArr,
+      target: Number(args[2]),
+    };
+  } else {
+    throw new Error("Provided values were not numbers!");
+  }
+};
+
 const calculateExercises = (arr: Array<number>, target: number) => {
   const periodLength: number = arr.length;
 
   let success: boolean = false,
     rating: number,
     ratingDescription: string;
-    
+
   let trainingDays: Array<number> = [];
   for (let i = 0; i < periodLength; i++) {
     if (arr[i] !== 0) {
@@ -44,4 +70,17 @@ const calculateExercises = (arr: Array<number>, target: number) => {
   };
 };
 
-console.log(calculateExercises([3, 0, 2, 4.5, 0, 3, 1], 2));
+try {
+  const { array, target } = parseArgumentS(process.argv);
+  console.log(calculateExercises(array, target));
+} catch (error: unknown) {
+  let errorMessage = "Something went wrong: ";
+  // here we can not use error.message
+  if (error instanceof Error) {
+    // the type is narrowed and we can refer to error.message
+    errorMessage += error.message;
+  }
+  // here we can not use error.message
+
+  console.log(errorMessage);
+}
